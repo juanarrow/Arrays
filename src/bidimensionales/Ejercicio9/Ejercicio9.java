@@ -1,15 +1,24 @@
 package bidimensionales.Ejercicio9;
 
 public class Ejercicio9 {
+    // Códigos de color ANSI
+    static final String NEGRO = "\u001B[48;5;0m";  // Fondo marrón
+    static final String BLANCO = "\u001B[48;5;255m";  // Fondo naranja
+    static final String RESET = "\u001B[0m";
     public static void main(String[] args) {
         final int TAMANIO = 24;
         
         // Crear y rellenar la matriz original
-        int[][] matriz = new int[TAMANIO][TAMANIO];
+        String[][] matriz = new String[TAMANIO][TAMANIO];
+        boolean blanco = true;
+        String color = BLANCO;
         for (int i = 0; i < TAMANIO; i++) {
             for (int j = 0; j < TAMANIO; j++) {
-                matriz[i][j] = (int)(Math.random() * 101);
+                color = (blanco)?BLANCO:NEGRO;
+                matriz[i][j] = color+"   "+RESET;
+                blanco = !blanco;
             }
+            //blanco = !blanco;
         }
         
         // Bucle infinito para rotar continuamente
@@ -24,12 +33,12 @@ public class Ejercicio9 {
             mostrarMatriz(matriz);
             
             // Crear matriz para el resultado
-            int[][] resultado = new int[TAMANIO][TAMANIO];
+            String[][] resultado = new String[TAMANIO][TAMANIO];
             
             // Para cada capa
             for (int capa = 0; capa < TAMANIO/2; capa++) {
                 int n = TAMANIO - 2 * capa;
-                int[] temp = new int[n * 4 - 4];
+                String[] temp = new String[n * 4 - 4];
                 int idx = 0;
                 
                 // Copiar elementos a array temporal
@@ -43,7 +52,7 @@ public class Ejercicio9 {
                     temp[idx++] = matriz[i][capa];
                 
                 // Rotar array temporal
-                int ultimo = temp[temp.length-1];
+                String ultimo = temp[temp.length-1];
                 for (int i = temp.length-1; i > 0; i--) {
                     temp[i] = temp[i-1];
                 }
@@ -73,10 +82,10 @@ public class Ejercicio9 {
         }
     }
     
-    private static void mostrarMatriz(int[][] matriz) {
+    private static void mostrarMatriz(String[][] matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
-                System.out.printf("%3d ", matriz[i][j]);
+                System.out.printf("%s", matriz[i][j]);
             }
             System.out.println();
         }
